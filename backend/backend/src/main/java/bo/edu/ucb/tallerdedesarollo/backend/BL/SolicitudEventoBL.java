@@ -73,12 +73,12 @@ public class SolicitudEventoBL {
         // para el mail-----------------------------
         if(solicitudEventoDTO.getEstado()==1){
             Evento_publicacionDTO ep= eventoPublicacionDAO.getEvento(id);
-            emailService.sendSimpleMessage("rene.vicente@ucb.edu.bo", "La solicitud ''"+ep.getTitulo()+"'' fue ACEPTADA","" +
+            emailService.sendSimpleMessage("gael.condori@ucb.edu.bo", "La solicitud ''"+ep.getTitulo()+"'' fue ACEPTADA","" +
                     "La Solicitud ''" +ep.getTitulo()+"'' fue revisada y ACEPTADA con los datos: "+" TITULO: "+ep.getTitulo()+ " DESCRIPCION: " + ep.getDescripcion() +" LINK/LUGAR: "+ ep.getLink()+ " "+ ep.getLugar());
         }
         if(solicitudEventoDTO.getEstado()==2){
             Evento_publicacionDTO ep= eventoPublicacionDAO.getEvento(id);
-            emailService.sendSimpleMessage("rene.vicente@ucb.edu.bo", "La solicitud ''"+ep.getTitulo()+"'' fue RECHAZADA","" +
+            emailService.sendSimpleMessage("gael.condori@ucb.edu.bo", "La solicitud ''"+ep.getTitulo()+"'' fue RECHAZADA","" +
                     "La Solicitud ''" +ep.getTitulo()+"'' fue revisada y RECHAZADA ");
         }
 
@@ -128,7 +128,7 @@ public class SolicitudEventoBL {
         comentariosDao.insertComentarioSolicitud(comentarioDTO.getComentario(),user_id);
         SolicitudEventoDTO st= solicitudEventoDAO.findAllById(user_id);
         Evento_publicacionDTO ep= eventoPublicacionDAO.getEvento((int)st.getEvento_publicacion_ep_id());
-        emailService.sendSimpleMessage("rene.vicente@ucb.edu.bo", "La solicitud ''"+ep.getTitulo()+"'' fue puesta en revision","" +
+        emailService.sendSimpleMessage("gael.condori@ucb.edu.bo", "La solicitud ''"+ep.getTitulo()+"'' fue puesta en revision","" +
                 "La Solicitud ''" +ep.getTitulo()+"'' fue revisada y debe ser modificada, el motivo es: "+comentarioDTO.getComentario());
       return comentarioDTO;
     };

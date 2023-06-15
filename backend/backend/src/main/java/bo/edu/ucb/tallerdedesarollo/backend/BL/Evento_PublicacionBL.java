@@ -10,6 +10,8 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.mail.MessagingException;
+
 @Service
 public class Evento_PublicacionBL {
     Evento_publicacionDAO eventoPublicacionDAO;
@@ -33,7 +35,7 @@ public class Evento_PublicacionBL {
     }
 
 
-    public Integer newEvento (EventoRecepcionDTO eventoRecepcionDTO){
+    public Integer newEvento (EventoRecepcionDTO eventoRecepcionDTO) {
         eventoPublicacionDAO.saveEvento_publicacion(eventoRecepcionDTO.getTitulo(),eventoRecepcionDTO.getDescripcion(),eventoRecepcionDTO.getId_imagen(),eventoRecepcionDTO.getLugar(),eventoRecepcionDTO.getLink(),1);
         Integer idEvento=eventoPublicacionDAO.findIdByContend(eventoRecepcionDTO.getTitulo(),eventoRecepcionDTO.getDescripcion(),eventoRecepcionDTO.getId_imagen(),eventoRecepcionDTO.getLugar(),eventoRecepcionDTO.getLink(),1);
         for (SubInteresesDTO cts: eventoRecepcionDTO.getInteresesDTOS()) {
@@ -60,10 +62,11 @@ public class Evento_PublicacionBL {
                 }
             }
         }
+
         //System.out.println("publico: "+eventoRecepcionDTO.getPublico());
         //eventoPublicacionDAO.save_publico(idEvento,1,2,1); //llenar con datos de front
         // --------------------------------- Mail ----------------------------------------------
-        
+         
         List<UsuariosDTO> des= usuariosBL.getUsuariosByuserType();
         if(!des.isEmpty()){
             for (UsuariosDTO us: des) {
@@ -71,9 +74,15 @@ public class Evento_PublicacionBL {
                         "La Solicitud ''" +eventoRecepcionDTO.getTitulo()+"'' Fue creada y espera revision, con los datos: "+" TITULO: "+eventoRecepcionDTO.getTitulo()+ " -- DESCRIPCION: " + eventoRecepcionDTO.getDescripcion() +" -- LINK/LUGAR: "+ eventoRecepcionDTO.getLink()+ " "+ eventoRecepcionDTO.getLugar());
             }
         }
-        emailService.templatesMessage("gael.condori@ucb.edu.bo", "La solicitud ''"+eventoRecepcionDTO.getTitulo()+"'' fue CREADA","" +
+        /*emailService.templatesMessage("gael.condori@ucb.edu.bo", "La solicitud ''"+eventoRecepcionDTO.getTitulo()+"'' fue CREADA","" +
                 " (reenvio de prueba) La Solicitud ''" +eventoRecepcionDTO.getTitulo()+"'' Fue creada y espera revision, con los datos: "+" TITULO: "+eventoRecepcionDTO.getTitulo()+ " -- DESCRIPCION: " + eventoRecepcionDTO.getDescripcion() +" -- LINK/LUGAR: "+ eventoRecepcionDTO.getLink()+ " "+ eventoRecepcionDTO.getLugar());
-        
+        */
+         try {
+            emailService.sendHtmlEmail("gael.condori@ucb.edu.bo", "Prueba", "Esto es una prueba", eventoRecepcionDTO);
+        } catch (MessagingException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
         //---------------------------------- Fin Mail -------------------------------------------
 
         return idEvento;

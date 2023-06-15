@@ -18,7 +18,7 @@ public class Test {
 
     @GetMapping(path="/", produces = APPLICATION_JSON_VALUE)
     public String test() {
-        emailService.sendSimpleMessage("reneruben1@gmail.com","test", "Hola");
+        emailService.sendSimpleMessage("cely.condori.tipola@gmail.com","test", "Hola");
         return "Hola Mundo";
     }
 }

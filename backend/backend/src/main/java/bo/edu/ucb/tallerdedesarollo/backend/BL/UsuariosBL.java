@@ -3,7 +3,6 @@ package bo.edu.ucb.tallerdedesarollo.backend.BL;
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.stream.Collectors;
-
 import bo.edu.ucb.tallerdedesarollo.backend.DAO.InteresesUsuarioDAO;
 import bo.edu.ucb.tallerdedesarollo.backend.DTO.*;
 import org.slf4j.Logger;
